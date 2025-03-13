@@ -27,6 +27,13 @@
         <slf4j.version>2.0.9</slf4j.version>
         <logback.version>1.4.11</logback.version>
         <maven.surefire.version>3.3.0</maven.surefire.version>
+        <jackson-databind-nullable-version>0.2.6</jackson-databind-nullable-version>
+        <gson-version>2.10.1</gson-version>
+        <swagger-models-version>2.0.6</swagger-models-version>
+        <jakarta.validation-api-version>3.1.1</jakarta.validation-api-version>
+        <validation-api-version>2.0.1.Final</validation-api-version>
+        <jackson-databind-version>2.15.0</jackson-databind-version>
+        <swagger-annotations-version>2.2.28</swagger-annotations-version>
     </properties>
 
     <dependencyManagement>
@@ -34,7 +41,6 @@
         <!-- ARP COMMON LIBS MUST NOT BE MANAGED HERE TO AVOID CYCLIC DEPS -->
         <!-- IF ARP COMMON LIBS DEPEND ON EACH OTHER, THEY MUST DECLARE THEM DIRECTLY AND MUST NOT USE THIS BOM -->
         <dependencies>
-
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -42,23 +48,55 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openapitools</groupId>
+                <artifactId>jackson-databind-nullable</artifactId>
+                <version>${jackson-databind-nullable-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger-models-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>${jakarta.validation-api-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validation-api-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-databind-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
