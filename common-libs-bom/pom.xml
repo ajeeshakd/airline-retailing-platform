@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.arc.arp</groupId>
+        <artifactId>airline-retailing-platform-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.arc.arp</groupId>
+    <artifactId>common-libs-bom</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Common Libraries BOM</name>
+    <description>Manages dependencies for common libraries</description>
+
+    <!-- ✅ Centralized Version Management -->
+    <properties>
+        <common-libs.version>1.0.0</common-libs.version>
+        <types-clearance.version>0.0.1-SNAPSHOT</types-clearance.version>
+        <junit.version>5.11.0</junit.version>
+        <slf4j.version>2.0.9</slf4j.version>
+        <logback.version>1.4.11</logback.version>
+        <maven.surefire.version>3.3.0</maven.surefire.version>
+    </properties>
+
+    <dependencyManagement>
+        <!-- IMPORTANT - ONLY MANAGE 3RD PARTY LIBS HERE -->
+        <!-- ARP COMMON LIBS MUST NOT BE MANAGED HERE TO AVOID CYCLIC DEPS -->
+        <!-- IF ARP COMMON LIBS DEPEND ON EACH OTHER, THEY MUST DECLARE THEM DIRECTLY AND MUST NOT USE THIS BOM -->
+        <dependencies>
+
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
