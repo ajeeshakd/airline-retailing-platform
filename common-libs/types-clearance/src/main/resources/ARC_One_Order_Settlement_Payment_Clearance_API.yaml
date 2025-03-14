@@ -1,0 +1,1232 @@
+openapi: 3.1.1
+info:
+  contact:
+    email: support@arccorp.com
+    name: ARC Technical Support
+    url: 'https://support.arccorp.com/'
+  title: ARC One-Order API
+  description: >-
+    API for Requesting Payment Clearance, Clearing, Listing and Cancellation
+    with ARC
+  version: 1.0.0
+servers:
+  - url: 'https://api.arc.com/v1/payments'
+paths:
+  /payment-clearance:
+    post:
+      description: Submit a payment clearance request to ARC
+      operationId: submitARCPaymentClearanceRQ
+      tags:
+        - Payment Clearance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IATA_PaymentClearanceRQ'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/IATA_PaymentClearanceRQ'
+      responses:
+        '200':
+          description: Payment clearance request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IATA_Acknowledgement'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/IATA_Acknowledgement'
+  /payment-clearance-list:
+    post:
+      description: Submit a payment clearance list request to ARC
+      operationId: submitARCPaymentClearanceListRQ
+      tags:
+        - Payment Clearance List
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IATA_PaymentClearanceListRQ'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/IATA_PaymentClearanceListRQ'
+      responses:
+        '200':
+          description: Payment clearance list request accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IATA_PaymentClearanceListRS'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/IATA_PaymentClearanceListRS'
+components:
+  schemas:
+    {
+      "IATA_PaymentClearanceRQ": {
+        "type": "object",
+        "required": [
+          "Clearance",
+          "ClearanceCount"
+        ],
+        "properties": {
+          "Clearance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClearanceRequestType"
+            },
+            "minItems": 1
+          },
+          "ClearanceCount": {
+            "type": "integer"
+          },
+          "PayloadStandardAttributes": {
+            "$ref": "#/components/schemas/IATA_PayloadStandardAttributesType"
+          }
+        }
+      },
+      "IATA_PayloadStandardAttributesType": {
+        "type": "object",
+        "properties": {
+          "AltLangID": {
+            "type": "string"
+          },
+          "CorrelationID": {
+            "type": "string"
+          },
+          "EchoTokenText": {
+            "type": "string"
+          },
+          "PrimaryLangID": {
+            "type": "string"
+          },
+          "RetransmissionInd": {
+            "type": "boolean"
+          },
+          "SeqNumber": {
+            "type": "number"
+          },
+          "Timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "TrxID": {
+            "type": "string"
+          },
+          "TrxStatusCode": {
+            "type": "string"
+          },
+          "VersionNumber": {
+            "type": "number"
+          }
+        }
+      },
+      "ClearanceRequestType": {
+        "type": "object",
+        "required": [
+          "ClearanceData",
+          "PaymentBrandCode"
+        ],
+        "properties": {
+          "AgreementID": {
+            "type": "string"
+          },
+          "ClearanceData": {
+            "$ref": "#/components/schemas/ClearanceDataType"
+          },
+          "CommitmentID": {
+            "type": "string"
+          },
+          "IATA_EasyPay": {
+            "$ref": "#/components/schemas/IATA_EasyPayType"
+          },
+          "PaymentBrandCode": {
+            "type": "string"
+          }
+        }
+      },
+      "ClearanceDataType": {
+        "type": "object",
+        "required": [
+          "ClearanceID",
+          "ClearancePayeeData",
+          "ClearancePayerData",
+          "NetClearanceAmount",
+          "PaymentCommitmentDateTime",
+          "ProcessRuleCode"
+        ],
+        "properties": {
+          "ClearanceID": {
+            "type": "string"
+          },
+          "ClearancePayeeData": {
+            "$ref": "#/components/schemas/ClearancePayeeDataType"
+          },
+          "ClearancePayeeSignature": {
+            "$ref": "#/components/schemas/DigitalSignatureType"
+          },
+          "ClearancePayerData": {
+            "$ref": "#/components/schemas/ClearancePayerDataType"
+          },
+          "ClearancePayerSignature": {
+            "$ref": "#/components/schemas/DigitalSignatureType"
+          },
+          "NetClearanceAmount": {
+            "$ref": "#/components/schemas/AmountType"
+          },
+          "PaymentCommitmentDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ProcessRuleCode": {
+            "type": "string"
+          },
+          "RemittanceDate": {
+            "type": "string"
+          }
+        }
+      },
+      "IATA_EasyPayType": {
+        "type": "object",
+        "required": [
+          "AccountNumber",
+          "ApprovalCode"
+        ],
+        "properties": {
+          "AccountNumber": {
+            "type": "number"
+          },
+          "ApprovalCode": {
+            "type": "string"
+          }
+        }
+      },
+      "ClearancePayeeDataType": {
+        "type": "object",
+        "required": [
+          "ClearancePayee"
+        ],
+        "properties": {
+          "ClearancePayee": {
+            "$ref": "#/components/schemas/ClearancePayeeType"
+          },
+          "ClearancePayeeReconciliationID": {
+            "type": "string"
+          }
+        }
+      },
+      "DigitalSignatureType": {
+        "type": "object",
+        "properties": {
+          "SignatureType": {
+            "$ref": "#/components/schemas/SignatureType"
+          }
+        }
+      },
+      "ClearancePayerDataType": {
+        "type": "object",
+        "required": [
+          "ClearancePayer"
+        ],
+        "properties": {
+          "ClearancePayer": {
+            "$ref": "#/components/schemas/ClearancePayerType"
+          },
+          "ClearancePayerReconciliationID": {
+            "type": "string"
+          }
+        }
+      },
+      "AmountType": {
+        "type": "object",
+        "required": [
+          "CurCode"
+        ],
+        "properties": {
+          "Value": {
+            "type": "number"
+          },
+          "CurCode": {
+            "type": "string"
+          }
+        }
+      },
+      "ClearancePayeeType": {
+        "type": "object",
+        "required": [
+          "Carrier",
+          "Org",
+          "TravelAgency"
+        ],
+        "properties": {
+          "Carrier": {
+            "$ref": "#/components/schemas/CarrierType"
+          },
+          "Org": {
+            "$ref": "#/components/schemas/OrgType"
+          },
+          "TravelAgency": {
+            "$ref": "#/components/schemas/TravelAgencyType"
+          }
+        }
+      },
+      "SignatureType": {
+        "type": "object",
+        "required": [
+          "SignedInfo",
+          "SignatureValue"
+        ],
+        "properties": {
+          "SignedInfo": {
+            "$ref": "#/components/schemas/SignedInfoType"
+          },
+          "SignatureValue": {
+            "$ref": "#/components/schemas/SignatureValueType"
+          },
+          "KeyInfo": {
+            "$ref": "#/components/schemas/KeyInfoType"
+          },
+          "Object": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectType"
+            },
+            "minItems": 0
+          },
+          "Id": {
+            "type": "string"
+          }
+        }
+      },
+      "ClearancePayerType": {
+        "type": "object",
+        "required": [
+          "Carrier",
+          "Org",
+          "TravelAgency"
+        ],
+        "properties": {
+          "Carrier": {
+            "$ref": "#/components/schemas/CarrierType"
+          },
+          "Org": {
+            "$ref": "#/components/schemas/OrgType"
+          },
+          "TravelAgency": {
+            "$ref": "#/components/schemas/TravelAgencyType"
+          }
+        }
+      },
+      "CarrierType": {
+        "type": "object",
+        "required": [
+          "AirlineAccountingCode",
+          "AirlineDesigCode"
+        ],
+        "properties": {
+          "AirlineAccountingCode": {
+            "type": "string"
+          },
+          "AirlineDesigCode": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "OrgType": {
+        "type": "object",
+        "required": [
+          "OrgID"
+        ],
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "OrgID": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelAgencyType": {
+        "type": "object",
+        "required": [
+          "IATA_Number"
+        ],
+        "properties": {
+          "IATA_Number": {
+            "type": "number"
+          },
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "SignedInfoType": {
+        "type": "object",
+        "required": [
+          "CanonicalizationMethod",
+          "SignatureMethod",
+          "Reference"
+        ],
+        "properties": {
+          "CanonicalizationMethod": {
+            "$ref": "#/components/schemas/CanonicalizationMethodType"
+          },
+          "SignatureMethod": {
+            "$ref": "#/components/schemas/SignatureMethodType"
+          },
+          "Reference": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReferenceType"
+            },
+            "minItems": 1
+          },
+          "Id": {
+            "type": "string"
+          }
+        }
+      },
+      "SignatureValueType": {
+        "type": "object",
+        "properties": {
+          "Value": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "Id": {
+            "type": "string"
+          }
+        }
+      },
+      "DSAKeyValueType": {
+        "type": "object",
+        "required": [
+          "P",
+          "Q",
+          "Y",
+          "Seed",
+          "PgenCounter"
+        ],
+        "properties": {
+          "P": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "Q": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "G": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "Y": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "J": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "Seed": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "PgenCounter": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "RSAKeyValueType": {
+        "type": "object",
+        "required": [
+          "Modulus",
+          "Exponent"
+        ],
+        "properties": {
+          "Modulus": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "Exponent": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "KeyValueType": {
+        "type": "object",
+        "properties": {
+          "Content": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "DSAKeyValue": {
+                      "$ref": "#/components/schemas/DSAKeyValueType"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "RSAKeyValue": {
+                      "$ref": "#/components/schemas/RSAKeyValueType"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "RetrievalMethodType": {
+        "type": "object",
+        "properties": {
+          "Transforms": {
+            "$ref": "#/components/schemas/TransformsType"
+          },
+          "URI": {
+            "type": "string",
+            "format": "uri"
+          },
+          "Type": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "X509IssuerSerialType": {
+        "type": "object",
+        "required": [
+          "X509IssuerName",
+          "X509SerialNumber"
+        ],
+        "properties": {
+          "X509IssuerName": {
+            "type": "string"
+          },
+          "X509SerialNumber": {
+            "type": "integer"
+          }
+        }
+      },
+      "X509DataType": {
+        "type": "object",
+        "required": [
+          "X509IssuerSerialOrX509SKIOrX509SubjectName"
+        ],
+        "properties": {
+          "X509IssuerSerialOrX509SKIOrX509SubjectName": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "X509IssuerSerial": {
+                      "$ref": "#/components/schemas/X509IssuerSerialType"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "X509SKI": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "X509SubjectName": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "X509Certificate": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "X509CRL": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "PGPDataType": {
+        "type": "object",
+        "required": [
+          "Content"
+        ],
+        "properties": {
+          "Content": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "PGPKeyID": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "PGPKeyPacket": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "SPKIDataType": {
+        "type": "object",
+        "required": [
+          "SPKISexpAndany"
+        ],
+        "properties": {
+          "SPKISexpAndany": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "SPKISexp": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "KeyInfoType": {
+        "type": "object",
+        "properties": {
+          "Content": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "KeyName": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "KeyValue": {
+                      "$ref": "#/components/schemas/KeyValueType"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "RetrievalMethod": {
+                      "$ref": "#/components/schemas/RetrievalMethodType"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "X509Data": {
+                      "$ref": "#/components/schemas/X509DataType"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "PGPData": {
+                      "$ref": "#/components/schemas/PGPDataType"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "SPKIData": {
+                      "$ref": "#/components/schemas/SPKIDataType"
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "MgmtData": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "Id": {
+            "type": "string"
+          }
+        }
+      },
+      "ObjectType": {
+        "type": "object",
+        "properties": {
+          "Content": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "Id": {
+            "type": "string"
+          },
+          "MimeType": {
+            "type": "string"
+          },
+          "Encoding": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "CanonicalizationMethodType": {
+        "type": "object",
+        "required": [
+          "Algorithm"
+        ],
+        "properties": {
+          "Content": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "Algorithm": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "SignatureMethodType": {
+        "type": "object",
+        "required": [
+          "Algorithm"
+        ],
+        "properties": {
+          "Content": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "HMACOutputLength": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "Algorithm": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "TransformType": {
+        "type": "object",
+        "required": [
+          "Algorithm"
+        ],
+        "properties": {
+          "Content": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "XPath": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "Algorithm": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "TransformsType": {
+        "type": "object",
+        "required": [
+          "Transform"
+        ],
+        "properties": {
+          "Transform": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransformType"
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "DigestMethodType": {
+        "type": "object",
+        "required": [
+          "Algorithm"
+        ],
+        "properties": {
+          "Content": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "Algorithm": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "ReferenceType": {
+        "type": "object",
+        "required": [
+          "DigestMethod",
+          "DigestValue"
+        ],
+        "properties": {
+          "Transforms": {
+            "$ref": "#/components/schemas/TransformsType"
+          },
+          "DigestMethod": {
+            "$ref": "#/components/schemas/DigestMethodType"
+          },
+          "DigestValue": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "Id": {
+            "type": "string"
+          },
+          "URI": {
+            "type": "string",
+            "format": "uri"
+          },
+          "Type": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "IATA_Acknowledgement": {
+        "type": "object",
+        "properties": {
+          "Notification": {
+            "$ref": "#/components/schemas/AckType"
+          },
+          "PayloadAttributes": {
+            "$ref": "#/components/schemas/IATA_PayloadStandardAttributesType"
+          }
+        }
+      },
+      "AckType": {
+        "type": "object",
+        "required": [
+          "StatusCode"
+        ],
+        "properties": {
+          "StatusCode": {
+            "type": "string"
+          },
+          "StatusMessageText": {
+            "type": "string"
+          },
+          "WarningCode": {
+            "type": "string"
+          }
+        }
+      },
+      "IATA_PaymentClearanceListRQ": {
+        "type": "object",
+        "required": [
+          "ClearanceFilterCriteria",
+          "ClearanceID",
+          "OtherID"
+        ],
+        "properties": {
+          "ClearanceFilterCriteria": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClearanceFilterCriteriaType"
+            },
+            "minItems": 1
+          },
+          "ClearanceID": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "OtherID": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OtherID_Type"
+            },
+            "minItems": 1
+          },
+          "PayloadStandardAttributes": {
+            "$ref": "#/components/schemas/IATA_PayloadStandardAttributesType"
+          }
+        }
+      },
+      "ClearanceFilterCriteriaType": {
+        "type": "object",
+        "properties": {
+          "ClearancePayeeData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClearancePayeeDataType"
+            },
+            "minItems": 0
+          },
+          "ClearancePayerData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClearancePayerDataType"
+            },
+            "minItems": 0
+          },
+          "PaymentBrandCode": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0
+          },
+          "ProcessRuleCode": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0
+          },
+          "RemittanceDate": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RemittanceDateType"
+            },
+            "minItems": 0
+          },
+          "SettlementDate": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SettlementDateType"
+            },
+            "minItems": 0
+          },
+          "StatusCode": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0
+          }
+        }
+      },
+      "OtherID_Type": {
+        "type": "object",
+        "properties": {
+          "AgreementID": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0
+          },
+          "CommitmentID": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0
+          }
+        }
+      },
+      "RemittanceDateType": {
+        "type": "object",
+        "required": [
+          "FromDate",
+          "ToDate"
+        ],
+        "properties": {
+          "FromDate": {
+            "type": "string"
+          },
+          "ToDate": {
+            "type": "string"
+          }
+        }
+      },
+      "SettlementDateType": {
+        "type": "object",
+        "required": [
+          "FromDate",
+          "ToDate"
+        ],
+        "properties": {
+          "FromDate": {
+            "type": "string"
+          },
+          "ToDate": {
+            "type": "string"
+          }
+        }
+      },
+      "IATA_PaymentClearanceListRS": {
+        "type": "object",
+        "required": [
+          "Clearance",
+          "Error"
+        ],
+        "properties": {
+          "Clearance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClearanceListResponseType"
+            },
+            "minItems": 1
+          },
+          "Error": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ErrorType"
+            },
+            "minItems": 1
+          },
+          "PayloadStandardAttributes": {
+            "$ref": "#/components/schemas/IATA_PayloadStandardAttributesType"
+          }
+        }
+      },
+      "ClearanceListResponseType": {
+        "type": "object",
+        "required": [
+          "ClearanceID",
+          "ClearancePayeeData",
+          "ClearancePayerData",
+          "NetClearanceAmount",
+          "PaymentBrandCode",
+          "PaymentCommitmentDateTime",
+          "ProcessRuleCode",
+          "RemittanceDate",
+          "SettlementDate",
+          "StatusCode"
+        ],
+        "properties": {
+          "AgreementID": {
+            "type": "string"
+          },
+          "ClearanceID": {
+            "type": "string"
+          },
+          "ClearancePayeeData": {
+            "$ref": "#/components/schemas/ClearancePayeeDataType"
+          },
+          "ClearancePayeeSignature": {
+            "$ref": "#/components/schemas/DigitalSignatureType"
+          },
+          "ClearancePayerData": {
+            "$ref": "#/components/schemas/ClearancePayerDataType"
+          },
+          "ClearancePayerSignature": {
+            "$ref": "#/components/schemas/DigitalSignatureType"
+          },
+          "ClearingID": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0
+          },
+          "CommitmentID": {
+            "type": "string"
+          },
+          "IATA_EasyPay": {
+            "$ref": "#/components/schemas/IATA_EasyPayType"
+          },
+          "NetClearanceAmount": {
+            "$ref": "#/components/schemas/AmountType"
+          },
+          "NonSettledAmount": {
+            "$ref": "#/components/schemas/AmountType"
+          },
+          "PaymentBrandCode": {
+            "type": "string"
+          },
+          "PaymentCommitmentDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ProcessRuleCode": {
+            "type": "string"
+          },
+          "RemittanceDate": {
+            "type": "string"
+          },
+          "SettlementDate": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorType": {
+        "type": "object",
+        "properties": {
+          "Code": {
+            "type": "string"
+          },
+          "DescText": {
+            "type": "string"
+          },
+          "ErrorID": {
+            "type": "string"
+          },
+          "LangCode": {
+            "type": "string"
+          },
+          "OwnerName": {
+            "type": "string"
+          },
+          "StatusText": {
+            "type": "string"
+          },
+          "TagText": {
+            "type": "string"
+          },
+          "TypeCode": {
+            "type": "string"
+          },
+          "URL": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+
+    }

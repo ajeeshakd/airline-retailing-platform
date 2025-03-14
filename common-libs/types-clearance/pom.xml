@@ -15,7 +15,8 @@
     <url>http://www.example.com</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <open-api-spec-file-name>one-order-api-spec.yaml</open-api-spec-file-name>
+        <arc-one-order-settlement-api-file>ARC_One_Order_Settlement_Payment_Clearance_API.yaml</arc-one-order-settlement-api-file>
+                <openapi-generator-maven-plugin-version>7.9.0</openapi-generator-maven-plugin-version>
     </properties>
     <!-- Import the Common BOM -->
     <dependencyManagement>
@@ -36,11 +37,6 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>1.6.11</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -93,7 +89,7 @@
              <plugin>
                  <groupId>org.openapitools</groupId>
                  <artifactId>openapi-generator-maven-plugin</artifactId>
-                 <version>7.9.0</version>
+                 <version>${openapi-generator-maven-plugin-version}</version>
                  <executions>
                      <execution>
                          <goals>
@@ -102,7 +98,7 @@
                      </execution>
                  </executions>
                  <configuration>
-                     <inputSpec>${project.basedir}/src/main/resources/${open-api-spec-file-name}</inputSpec>
+                     <inputSpec>${project.basedir}/src/main/resources/${arc-one-order-settlement-api-file}</inputSpec>
                      <generatorName>java</generatorName>
                      <output>${project.build.directory}/generated-sources</output>
                      <packageName>com.arc.arp</packageName>
@@ -110,8 +106,6 @@
                      <skipValidateSpec>true</skipValidateSpec>
                      <generateSupportingFiles>false</generateSupportingFiles>
                      <generateApis>false</generateApis>
-                     <generateModels>true</generateModels>
-                     <generateModelTests>false</generateModelTests>
                      <configOptions>
                          <models>true</models>
                      </configOptions>
