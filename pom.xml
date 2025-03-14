@@ -182,7 +182,7 @@
                             <counter>LINE</counter>
                             <value>COVEREDRATIO</value>
                             <!-- TODO: Temp relief to skip build failures, need to achieve 90+% -->
-                            <minimum>0</minimum> <!-- 90% Coverage Required -->
+                            <minimum>.95</minimum> <!-- 90% Coverage Required -->
                           </limit>
                         </limits>
                       </rule>
