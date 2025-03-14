@@ -19,7 +19,7 @@
     <name>Common Libraries BOM</name>
     <description>Manages dependencies for common libraries</description>
 
-    <!-- ✅ Centralized Version Management -->
+    <!-- Centralized Version Management -->
     <properties>
         <common-libs.version>1.0.0</common-libs.version>
         <types-clearance.version>0.0.1-SNAPSHOT</types-clearance.version>
@@ -37,6 +37,8 @@
         <javax.annotation-api-version>1.3.2</javax.annotation-api-version>
         <jsr305-version>3.0.2</jsr305-version>
         <jakarta.annotation-api-version>3.0.0</jakarta.annotation-api-version>
+        <jackson-dataformat-xml>2.18.3</jackson-dataformat-xml>
+
     </properties>
 
     <dependencyManagement>
@@ -66,6 +68,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.openapitools</groupId>
                 <artifactId>jackson-databind-nullable</artifactId>
@@ -116,6 +119,13 @@
                 <artifactId>jakarta.annotation-api</artifactId>
                 <version>${jakarta.annotation-api-version}</version>
             </dependency>
+
+            <dependency>
+			        <groupId>com.fasterxml.jackson.dataformat</groupId>
+			        <artifactId>jackson-dataformat-xml</artifactId>
+              <version>${jackson-dataformat-xml}</version>
+		      </dependency>
+
         </dependencies>
     </dependencyManagement>
 

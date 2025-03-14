@@ -22,7 +22,7 @@
     <properties>
         <spring-boot.version>3.4.3</spring-boot.version>
         <spring-cloud.version>2024.0.0</spring-cloud.version>
-        <spring-cloud-function.version>4.0.1</spring-cloud-function.version>
+        <spring-cloud-function.version>4.2.0</spring-cloud-function.version>
         <aws-sdk.version>2.20.92</aws-sdk.version>
         <junit.version>5.11.0</junit.version>
         <wrapper.version>1.0.29.RELEASE</wrapper.version>
@@ -74,7 +74,6 @@
             <artifactId>lambda</artifactId>
             <version>${aws-sdk.version}</version>
         </dependency>
-
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>s3</artifactId>
