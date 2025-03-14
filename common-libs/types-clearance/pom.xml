@@ -4,24 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>com.arc.arp</groupId>
         <artifactId>airline-retailing-platform-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
-    <groupId>com.arc.arp</groupId>
     <artifactId>types-clearance</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-
     <name>types-clearance</name>
     <url>http://www.example.com</url>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <open-api-spec-file-name>one-order-api-spec.yaml</open-api-spec-file-name>
     </properties>
-
     <!-- Import the Common BOM -->
     <dependencyManagement>
         <dependencies>
@@ -75,40 +70,53 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
-    </dependencies>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
+     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.9.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <inputSpec>${project.basedir}/src/main/resources/final.yaml</inputSpec>
-                    <generatorName>java</generatorName>
-                    <output>${project.build.directory}/generated-sources</output>
-                    <skipValidateSpec>true</skipValidateSpec>
-                    <generateSupportingFiles>false</generateSupportingFiles>
-                    <generateApis>false</generateApis>
-                    <generateModels>true</generateModels>
-                    <generateModelTests>false</generateModelTests>
-                    <configOptions>
-                        <models>true</models>
-                    </configOptions>
+     <build>
+         <plugins>
+             <plugin>
+                 <groupId>org.springframework.boot</groupId>
+                 <artifactId>spring-boot-maven-plugin</artifactId>
+             </plugin>
+             <plugin>
+                 <groupId>org.openapitools</groupId>
+                 <artifactId>openapi-generator-maven-plugin</artifactId>
+                 <version>7.9.0</version>
+                 <executions>
+                     <execution>
+                         <goals>
+                             <goal>generate</goal>
+                         </goals>
+                     </execution>
+                 </executions>
+                 <configuration>
+                     <inputSpec>${project.basedir}/src/main/resources/${open-api-spec-file-name}</inputSpec>
+                     <generatorName>java</generatorName>
+                     <output>${project.build.directory}/generated-sources</output>
+                     <packageName>com.arc.arp</packageName>
+                     <modelPackage>com.arc.arp.model</modelPackage>
+                     <skipValidateSpec>true</skipValidateSpec>
+                     <generateSupportingFiles>false</generateSupportingFiles>
+                     <generateApis>false</generateApis>
+                     <generateModels>true</generateModels>
+                     <generateModelTests>false</generateModelTests>
+                     <configOptions>
+                         <models>true</models>
+                     </configOptions>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
