@@ -19,7 +19,7 @@
     <name>Common Libraries BOM</name>
     <description>Manages dependencies for common libraries</description>
 
-    <!-- ✅ Centralized Version Management -->
+    <!-- Centralized Version Management -->
     <properties>
         <common-libs.version>1.0.0</common-libs.version>
         <types-clearance.version>0.0.1-SNAPSHOT</types-clearance.version>
