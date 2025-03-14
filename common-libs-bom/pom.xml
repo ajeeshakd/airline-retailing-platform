@@ -8,7 +8,7 @@
     <parent>
         <groupId>com.arc.arp</groupId>
         <artifactId>airline-retailing-platform-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>        
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <groupId>com.arc.arp</groupId>
@@ -27,6 +27,7 @@
         <slf4j.version>2.0.9</slf4j.version>
         <logback.version>1.4.11</logback.version>
         <maven.surefire.version>3.3.0</maven.surefire.version>
+        <ackson-dataformat-xml>2.18.3</ackson-dataformat-xml>
     </properties>
 
     <dependencyManagement>
@@ -60,6 +61,12 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.version}</version>
             </dependency>
+
+            <dependency>
+			    <groupId>com.fasterxml.jackson.dataformat</groupId>
+			    <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${ackson-dataformat-xml}</version>
+		    </dependency>
         </dependencies>
     </dependencyManagement>
 

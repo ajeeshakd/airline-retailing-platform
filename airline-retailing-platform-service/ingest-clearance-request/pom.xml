@@ -8,7 +8,7 @@
     <parent>
         <groupId>com.arc.arp</groupId>
         <artifactId>airline-retailing-platform-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>        
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <groupId>com.arc.arp</groupId>
@@ -19,7 +19,7 @@
     <description>ARP service for ingesting clearance requests</description>
 
     <properties>
-		  <java.version>17</java.version>
+		  <java.version>21</java.version>
 		  <wrapper.version>1.0.29.RELEASE</wrapper.version>
 	  </properties>
 
@@ -28,6 +28,14 @@
             <dependency>
                 <groupId>com.arc.arp</groupId>
                 <artifactId>airline-retailing-platform-service-bom</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.arc.arp</groupId>
+                <artifactId>common-libs-bom</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -57,13 +65,13 @@
             <artifactId>spring-cloud-function-web</artifactId>
             <scope>provided</scope>
         </dependency>
-		
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <scope>provided</scope>
         </dependency>
-		
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -91,17 +99,12 @@
         <dependency>
         	<groupId>com.arc.arp</groupId>
         	<artifactId>types-clearance</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
+            <!-- TODO: Need to finalize on how to manage the arc's common libs -->
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
-		</dependency>		
-		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-serialization -->
-		<dependency>
-		    <groupId>com.amazonaws</groupId>
-		    <artifactId>aws-lambda-java-serialization</artifactId>
-		    <version>1.1.5</version>
 		</dependency>
 
     </dependencies>
